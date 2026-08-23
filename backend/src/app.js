@@ -1,10 +1,8 @@
-import express from "express"
+import express from "express";
+import aiRoutes from "./routes/ai.routes.js";
 
-const app = express()
+const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Test Route")
-})
+app.use("/ai", aiRoutes);
 
-
-export default app
+export default app;
