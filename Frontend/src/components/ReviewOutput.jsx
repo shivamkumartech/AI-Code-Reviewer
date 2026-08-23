@@ -1,9 +1,10 @@
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
-import { useTheme } from "../context/ThemeContext";
+import useTheme from "../context/ThemeContext";
 
 export default function ReviewOutput({ review, loading, error }) {
-  const { isDark } = useTheme();
+  const { themeMode } = useTheme();
+  const isDark = themeMode === "dark";
 
   return (
     <div className="flex-1 flex flex-col border rounded-xl overflow-hidden shadow-sm transition-colors bg-white border-slate-200 dark:bg-zinc-950 dark:border-zinc-800">
@@ -12,11 +13,11 @@ export default function ReviewOutput({ review, loading, error }) {
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
           Review Output
         </span>
-        {review && (
-          <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
-            Analysis Ready
-          </span>
-        )}
+          {review && (
+              <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
+                Analysis Ready
+              </span>
+          )}
       </div>
 
       {/* Review Content */}
@@ -34,8 +35,12 @@ export default function ReviewOutput({ review, loading, error }) {
             <p className="text-xs font-medium">Analyzing your code...</p>
           </div>
         ) : review ? (
-          <div className={`markdown-body ${isDark ? "dark-markdown" : "light-markdown"}`}>
-            <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+          <div
+            className={`markdown-body ${isDark ? "dark-markdown" : "light-markdown"}`}
+          >
+            <Markdown rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}>
+              {review}
+            </Markdown>
           </div>
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500 dark:text-zinc-400">
@@ -44,7 +49,8 @@ export default function ReviewOutput({ review, loading, error }) {
               Ready to review your code
             </h3>
             <p className="text-xs max-w-xs leading-relaxed">
-              Paste your code in the left editor and click <strong className="text-indigo-500">Review Code</strong>.
+              Paste your code in the left editor and click{" "}
+              <strong className="text-indigo-500">Review Code</strong>.
             </p>
           </div>
         )}
@@ -52,3 +58,4 @@ export default function ReviewOutput({ review, loading, error }) {
     </div>
   );
 }
+
