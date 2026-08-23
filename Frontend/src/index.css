@@ -1,8 +1,5 @@
 @import "tailwindcss";
 @import "prismjs/themes/prism-tomorrow.css";
-@import "highlight.js/styles/github-dark.css";
-
-/* Enable class-based dark mode in Tailwind CSS v4 */
 @custom-variant dark (&:where(.dark, .dark *));
 
 html,
@@ -12,7 +9,72 @@ body,
   width: 100%;
 }
 
-/* Markdown Shared Typography */
+/* ============================================
+   BUG 1 FIX — Prism light-mode contrast
+   prism-tomorrow.css is dark-only; override tokens
+   for light mode instead of leaving pale defaults.
+   ============================================ */
+:root:not(.dark) code[class*="language-"],
+:root:not(.dark) pre[class*="language-"] {
+  color: #1e293b;
+}
+:root:not(.dark) .token.keyword    { color: #7c3aed; }
+:root:not(.dark) .token.function   { color: #b45309; }
+:root:not(.dark) .token.punctuation{ color: #475569; }
+:root:not(.dark) .token.operator   { color: #0f766e; }
+:root:not(.dark) .token.string     { color: #15803d; }
+:root:not(.dark) .token.comment    { color: #94a3b8; font-style: italic; }
+:root:not(.dark) .token.number     { color: #b91c1c; }
+
+/* ============================================
+   BUG 2 FIX — stray textarea border
+   react-simple-code-editor leaves UA default
+   border/outline on the underlying <textarea>.
+   ============================================ */
+.code-editor-textarea {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-sizing: border-box !important;
+  -webkit-text-fill-color: transparent; /* keep caret visible, hide native glyphs */
+  caret-color: currentColor;
+}
+:root:not(.dark) .code-editor-textarea {
+  caret-color: #1e293b;
+}
+.dark .code-editor-textarea {
+  caret-color: #e4e4e7;
+}
+
+/* ============================================
+   BUG 3 FIX — caret/text drift between the
+   textarea layer and the <pre> highlight layer.
+   Both MUST share identical text metrics —
+   font, size, line-height, spacing, tabs, wrapping.
+   ============================================ */
+.code-editor-textarea,
+.code-editor-pre,
+.code-editor-pre code {
+  font-family: "Fira Code", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  tab-size: 2 !important;
+  -moz-tab-size: 2 !important;
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box !important;
+}
+
+/* ============================================
+   BUG 4 FIX — .markdown-body was dark-only.
+   Light mode had no overrides: near-invisible
+   blockquote text, forced-dark code blocks,
+   near-black heading borders on a white panel.
+   ============================================ */
 .markdown-body {
   font-family: "Inter", system-ui, sans-serif;
   font-size: 0.95rem;
@@ -30,17 +92,26 @@ body,
 
 .markdown-body h1 {
   font-size: 1.4rem;
-  border-bottom: 1px solid #222431;
+  border-bottom: 1px solid #e2e8f0;
   padding-bottom: 0.4rem;
+}
+.dark .markdown-body h1 {
+  border-bottom-color: #222431;
 }
 
 .markdown-body h2 {
   font-size: 1.2rem;
+  color: #9333ea;
+}
+.dark .markdown-body h2 {
   color: #c084fc;
 }
 
 .markdown-body h3 {
   font-size: 1.05rem;
+  color: #4f46e5;
+}
+.dark .markdown-body h3 {
   color: #818cf8;
 }
 
@@ -59,21 +130,30 @@ body,
 }
 
 .markdown-body code:not(pre code) {
-  background: rgba(99, 102, 241, 0.15);
-  color: #c084fc;
+  background: rgba(99, 102, 241, 0.1);
+  color: #7c3aed;
   padding: 0.2rem 0.45rem;
   border-radius: 5px;
   font-family: "Fira Code", monospace;
   font-size: 0.88em;
-  border: 1px solid rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+.dark .markdown-body code:not(pre code) {
+  background: rgba(99, 102, 241, 0.15);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.2);
 }
 
 .markdown-body pre {
   margin: 1rem 0;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #222431;
-  background-color: #0d1117 !important;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+.dark .markdown-body pre {
+  border-color: #222431;
+  background-color: #0d1117;
 }
 
 .markdown-body pre code {
@@ -82,6 +162,10 @@ body,
   line-height: 1.6;
   padding: 1.25rem !important;
   display: block;
+  color: #1e293b;
+}
+.dark .markdown-body pre code {
+  color: #e4e4e7;
 }
 
 .markdown-body blockquote {
@@ -90,6 +174,9 @@ body,
   background: rgba(99, 102, 241, 0.08);
   border-radius: 0 8px 8px 0;
   margin: 1rem 0;
+  color: #475569;
+}
+.dark .markdown-body blockquote {
   color: #d1d5db;
 }
 
@@ -98,16 +185,19 @@ body,
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #27273a;
+  background: #cbd5e1;
   border-radius: 4px;
 }
-
+.dark ::-webkit-scrollbar-thumb {
+  background: #27273a;
+}
 ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
   background: #3b3b54;
 }
