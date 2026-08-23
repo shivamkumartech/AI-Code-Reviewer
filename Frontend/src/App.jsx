@@ -10,6 +10,7 @@ function App() {
   const [code, setCode] = useState(` function sum() {
   return 1 + 1
 }`);
+  const [review, setReview] = useState(``)
 
   useEffect(() => {
     prism.highlightAll();
@@ -19,7 +20,7 @@ function App() {
     
     const response = await axios.post("http://localhost:3000/ai/get-review", { code })
 
-    console.log(response.data)
+    setReview(response.data)
   }
 
   return (
@@ -50,7 +51,7 @@ function App() {
             Review
           </div>
         </div>
-        <div className="right"></div>
+        <div className="right">{review}</div>
       </main>
     </>
   );
