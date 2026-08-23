@@ -1,16 +1,11 @@
 import { useState } from "react";
-import prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
-import EditorComponent from "react-simple-code-editor";
 import axios from "axios";
-import Markdown from "react-markdown";
-import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css";
+import { ThemeProvider } from "./context/ThemeContext";
+import Navbar from "./components/Navbar";
+import CodeEditor from "./components/CodeEditor";
+import ReviewOutput from "./components/ReviewOutput";
 
-// Fallback for CommonJS/ESM module import variations
-const Editor = EditorComponent.default || EditorComponent;
-
-function App() {
+function AppContent() {
   const [code, setCode] = useState(`function sum() {
   return 1 + 1;
 }`);
@@ -19,6 +14,7 @@ function App() {
   const [error, setError] = useState(null);
 
   const reviewCode = async () => {
+    if (!code.trim()) return;
     setLoading(true);
     setError(null);
 
@@ -29,54 +25,36 @@ function App() {
       setReview(response.data);
     } catch (err) {
       console.error("Error fetching review:", err);
-      setError("Failed to get code review. Please try again.");
+      setError("Failed to generate code review. Make sure the backend server is running.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main>
-      <div className="left">
-        <div className="code">
-          <Editor
-            value={code}
-            onValueChange={(code) => setCode(code)}
-            highlight={(code) =>
-              prism.highlight(code, prism.languages.javascript, "javascript")
-            }
-            padding={10}
-            style={{
-              fontFamily: '"Fira code", "Fira Mono", monospace',
-              fontSize: 16,
-              border: "1px solid #ddd",
-              borderRadius: "5px",
-              height: "100%",
-              width: "100%",
-            }}
-          />
-        </div>
-        <button 
-          onClick={reviewCode} 
-          className="review"
-          disabled={loading}
-        >
-          {loading ? "Reviewing..." : "Review"}
-        </button>
-      </div>
-
-      <div className="right">
-        {error && <p className="error" style={{ color: "red" }}>{error}</p>}
-        {loading ? (
-          <p>Analyzing your code...</p>
-        ) : (
-          <Markdown rehypePlugins={[rehypeHighlight]}>
-            {review || "Click **Review** to analyze your code."}
-          </Markdown>
-        )}
-      </div>
-    </main>
+    <div className="h-screen w-screen flex flex-col font-sans overflow-hidden bg-slate-100 text-slate-900 dark:bg-zinc-900 dark:text-zinc-100 transition-colors">
+      <Navbar />
+      <main className="flex-1 flex gap-4 p-4 h-[calc(100vh-64px)] overflow-hidden">
+        <CodeEditor
+          code={code}
+          setCode={setCode}
+          onReview={reviewCode}
+          loading={loading}
+        />
+        <ReviewOutput
+          review={review}
+          loading={loading}
+          error={error}
+        />
+      </main>
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
