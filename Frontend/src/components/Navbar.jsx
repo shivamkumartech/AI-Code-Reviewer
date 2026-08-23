@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <header className="h-16 px-6 flex items-center justify-between border-b transition-colors border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-slate-900 dark:text-zinc-100">
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-semibold tracking-tight">
+        <h1 className="text-lg font-bold tracking-tight">
           AI Code Reviewer
         </h1>
       </div>

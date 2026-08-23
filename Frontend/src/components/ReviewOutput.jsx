@@ -13,11 +13,11 @@ export default function ReviewOutput({ review, loading, error }) {
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
           Review Output
         </span>
-          {review && (
-              <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
-                Analysis Ready
-              </span>
-          )}
+        {review && (
+          <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 dark:bg-emerald-500/15 dark:text-emerald-400 dark:border-emerald-500/25">
+            Analysis Ready
+          </span>
+        )}
       </div>
 
       {/* Review Content */}
@@ -38,7 +38,9 @@ export default function ReviewOutput({ review, loading, error }) {
           <div
             className={`markdown-body ${isDark ? "dark-markdown" : "light-markdown"}`}
           >
-            <Markdown rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}>
+            <Markdown
+              rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+            >
               {review}
             </Markdown>
           </div>
@@ -58,4 +60,3 @@ export default function ReviewOutput({ review, loading, error }) {
     </div>
   );
 }
-

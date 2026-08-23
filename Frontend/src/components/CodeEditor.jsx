@@ -11,12 +11,12 @@ function CodeEditor({ code, setCode, onReview, loading }) {
 
   const highlight = useCallback(
     (src) => prism.highlight(src, prism.languages.javascript, "javascript"),
-    []
+    [],
   );
 
   const editorClassName = useMemo(
     () => `min-h-full ${isDark ? "text-zinc-200" : "text-zinc-800"}`,
-    [isDark]
+    [isDark],
   );
 
   return (
