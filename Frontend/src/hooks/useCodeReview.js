@@ -19,6 +19,7 @@ export function useCodeReview() {
 
     setLoading(true);
     setError(null);
+    setReview("");
 
     try {
       const responseText = await getCodeReview(code);

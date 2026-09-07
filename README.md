@@ -1,12 +1,15 @@
 # ⚡ AI Code Reviewer
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-AI-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 
 An intelligent full-stack web application that uses **Google Gemini** to review developer source code and provide feedback on code quality, potential bugs, security risks, performance, and possible improvements.
+
+## 🌐 Live Demo
+
+**[AI Code Reviewer](https://ai-code-reviewer-ecru-xi.vercel.app/)**
 
 ---
 
@@ -197,7 +200,7 @@ Returns the current backend health status.
 ```json
 {
   "status": "OK",
-  "timestamp": "2026-08-24T05:00:00.000Z"
+  "timestamp": "..."
 }
 ```
 
