@@ -11,14 +11,18 @@ function AppContent() {
   return (
     <div className="h-screen w-screen flex flex-col font-sans overflow-hidden transition-colors bg-slate-100 text-slate-900 dark:bg-zinc-900 dark:text-zinc-100">
       <Navbar />
-      <main className="flex-1 flex gap-4 p-4 h-[calc(100vh-64px)] overflow-hidden">
-        <CodeEditor
-          code={code}
-          setCode={setCode}
-          onReview={reviewCode}
-          loading={loading}
-        />
-        <ReviewOutput review={review} loading={loading} error={error} />
+      <main className="flex-1 flex flex-col md:flex-row gap-3 md:gap-4 p-3 md:p-4 h-[calc(100vh-64px)] overflow-y-auto md:overflow-hidden">
+        <div className="flex-1 min-h-[45vh] md:min-h-0 flex">
+          <CodeEditor
+            code={code}
+            setCode={setCode}
+            onReview={reviewCode}
+            loading={loading}
+          />
+        </div>
+        <div className="flex-1 min-h-[45vh] md:min-h-0 flex">
+          <ReviewOutput review={review} loading={loading} error={error} />
+        </div>
       </main>
     </div>
   );

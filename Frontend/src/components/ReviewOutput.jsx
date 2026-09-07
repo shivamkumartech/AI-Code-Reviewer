@@ -9,7 +9,7 @@ export default function ReviewOutput({ review, loading, error }) {
   return (
     <div className="flex-1 flex flex-col border rounded-xl overflow-hidden shadow-sm transition-colors bg-white border-slate-200 dark:bg-zinc-950 dark:border-zinc-800">
       {/* Panel Header */}
-      <div className="h-12 px-4 flex items-center justify-between border-b transition-colors bg-slate-50 border-slate-200 dark:bg-zinc-900/60 dark:border-zinc-800">
+      <div className="h-12 px-3 sm:px-4 flex items-center justify-between border-b transition-colors bg-slate-50 border-slate-200 dark:bg-zinc-900/60 dark:border-zinc-800">
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
           Review Output
         </span>
@@ -21,7 +21,7 @@ export default function ReviewOutput({ review, loading, error }) {
       </div>
 
       {/* Review Content */}
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
         {error && (
           <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 dark:text-red-400 text-sm mb-4">
             <span>⚠️</span>

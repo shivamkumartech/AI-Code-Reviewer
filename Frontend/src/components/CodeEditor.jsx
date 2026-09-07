@@ -22,7 +22,7 @@ function CodeEditor({ code, setCode, onReview, loading }) {
   return (
     <div className="flex-1 flex flex-col border rounded-xl overflow-hidden shadow-sm relative transition-colors bg-white border-slate-200 dark:bg-zinc-950 dark:border-zinc-800">
       {/* Panel Header */}
-      <div className="h-12 px-4 flex items-center justify-between border-b transition-colors bg-slate-50 border-slate-200 dark:bg-zinc-900/60 dark:border-zinc-800">
+      <div className="h-12 px-3 sm:px-4 flex items-center justify-between border-b transition-colors bg-slate-50 border-slate-200 dark:bg-zinc-900/60 dark:border-zinc-800">
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
           Source Code
         </span>
@@ -58,7 +58,7 @@ function CodeEditor({ code, setCode, onReview, loading }) {
         onClick={onReview}
         disabled={loading}
         aria-busy={loading}
-        className="absolute bottom-4 right-4 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-medium px-5 py-2.5 rounded-lg shadow-md transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed z-10 flex items-center gap-2"
+        className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white text-xs font-medium px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg shadow-md transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed z-10 flex items-center gap-2"
       >
         {loading ? (
           <>
