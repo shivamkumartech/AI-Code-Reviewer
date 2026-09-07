@@ -29,9 +29,15 @@ function AppContent() {
 }
 
 export default function App() {
+  
   const [themeMode, setThemeMode] = useState(() => {
-    return localStorage.getItem("themeMode") || "dark";
-  });
+  try {
+    const savedTheme = localStorage.getItem("themeMode");
+    return savedTheme === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+});
 
   const darkMode = () => {
     setThemeMode("dark");
